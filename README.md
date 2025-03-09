@@ -38,27 +38,31 @@ The program performs conversions for the following instructions based on the **R
    g++ -o assembler assem2machine.cpp
 3. The output will be stored in **`output.mc`** in the format: `<address of instruction> <space> <machine code> <space, comma> <assembly instruction> <space, #> <opcode-func3-func7-rd-rs1-rs2-immediate>` followed by the data segment
 
-## Functions used
-Note: LW cannot take hex input here. Also, the project currently does not display errors for out of range immediates.
+## Functions Used
 
-Main Functions:
-1) DataSegment(); //Read Data segment and store it in memory (data)
-2) Instructions_Manual();  //Read Instruction set
-3) WriteToFile(); // Convert to hexadecimal and write pc & machine code to output.mc
-4) TextSegment(); //Read Text segment and store it
-5) ExtractLabels(); //Extract all labels with their positions
-6) sp_to_x2(); //To replace all sp with x2 (as sp is alias for register x2)
-7) Extract_type(); //Extracts Instruction type and calls typenumber and respective type function for writing machine code
-8) printDataMemory(); //Prints memory in Venus format (but no memory location)
-9) printDataMemory2(); //Prints memory in sir's format
+**Note:**  
+- **LW cannot take hex input** in the current implementation.  
+- The project **does not display errors** for out-of-range immediate values.  
 
-Type Processing Functions:
-1) I-Type
-2) R_Type
-3) S_Type
-4) SB_Type
-5) U_Type
-6) UJ_Type
+**Main Functions**
+1. `DataSegment()` – Reads the **.data** section and stores it in memory.  
+2. `Instructions_Manual()` – Reads the **instruction set** from the reference file.  
+3. `WriteToFile()` – Converts instructions to **hexadecimal** and writes PC & machine code to `output.mc`.  
+4. `TextSegment()` – Reads the **.text** section and stores the assembly instructions.  
+5. `ExtractLabels()` – Extracts **labels** and their respective positions in the code.  
+6. `sp_to_x2()` – Replaces all occurrences of **sp** with **x2** (since `sp` is an alias for register `x2`).  
+7. `Extract_type()` – Identifies the **instruction type** and calls the respective function for machine code conversion.  
+8. `printDataMemory()` – Prints the **data memory** in **Venus** format (without memory locations).  
+9. `printDataMemory2()` – Prints the **data memory** in the **professor's format**.  
 
-Appart from these, there are functions to convert from one base to other.
-Footer
+### **Type Processing Functions**
+1. `I_Type()` – Processes **I-format** instructions (e.g., `addi`, `lw`, `jalr`).  
+2. `R_Type()` – Processes **R-format** instructions (e.g., `add`, `sub`, `mul`).  
+3. `S_Type()` – Processes **S-format** instructions (e.g., `sw`, `sb`).  
+4. `SB_Type()` – Processes **SB-format** instructions (e.g., `beq`, `bne`).  
+5. `U_Type()` – Processes **U-format** instructions (e.g., `lui`, `auipc`).  
+6. `UJ_Type()` – Processes **UJ-format** instructions (e.g., `jal`).  
+
+### **Base Conversion Functions**
+In addition to instruction processing, the project includes functions to **convert between numerical bases** (decimal, binary, hexadecimal).  
+
