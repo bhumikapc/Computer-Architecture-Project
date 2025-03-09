@@ -1,4 +1,4 @@
-# Computer-Architecture-Project
+
 # Computer Architecture Project: Assembly to Machine Code Conversion
 
 This repository contains a C++ program that converts **RISC-V Assembly Code** into **Machine Code**.
