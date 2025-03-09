@@ -35,7 +35,7 @@ The program performs conversions for the following instructions based on the **R
 1. Place the assembly instructions to be converted inside the **`input.asm`** file.
 2. Compile the program using a C++ compiler:
    ```sh
-   g++ -o assembler Assembly_to_Machine.cpp
+   g++ -o assembler assem2machine.cpp
 3. The output will be stored in **`output.mc`** in the format: `<address of instruction> <space> <machine code> <space, comma> <assembly instruction> <space, #> <opcode-func3-func7-rd-rs1-rs2-immediate>` followed by the data segment
 
 ## Functions used
@@ -44,7 +44,7 @@ Note: LW cannot take hex input here. Also, the project currently does not displa
 Main Functions:
 1) DataSegment(); //Read Data segment and store it in memory (data)
 2) Instructions_Manual();  //Read Instruction set
-3) ofstream("output.mc").close();  // Clear the output file (creates and then closes it)
+3) WriteToFile(); // Convert to hexadecimal and write pc & machine code to output.mc
 4) TextSegment(); //Read Text segment and store it
 5) ExtractLabels(); //Extract all labels with their positions
 6) sp_to_x2(); //To replace all sp with x2 (as sp is alias for register x2)
