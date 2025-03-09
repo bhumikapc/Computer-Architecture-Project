@@ -55,7 +55,7 @@ The program performs conversions for the following instructions based on the **R
 8. `printDataMemory()` – Prints the **data memory** in **Venus** format (without memory locations).  
 9. `printDataMemory2()` – Prints the **data memory** in the **professor's format**.  
 
-### **Type Processing Functions**
+**Type Processing Functions**
 1. `I_Type()` – Processes **I-format** instructions (e.g., `addi`, `lw`, `jalr`).  
 2. `R_Type()` – Processes **R-format** instructions (e.g., `add`, `sub`, `mul`).  
 3. `S_Type()` – Processes **S-format** instructions (e.g., `sw`, `sb`).  
@@ -63,6 +63,6 @@ The program performs conversions for the following instructions based on the **R
 5. `U_Type()` – Processes **U-format** instructions (e.g., `lui`, `auipc`).  
 6. `UJ_Type()` – Processes **UJ-format** instructions (e.g., `jal`).  
 
-### **Base Conversion Functions**
+**Base Conversion Functions**
 In addition to instruction processing, the project includes functions to **convert between numerical bases** (decimal, binary, hexadecimal).  
 
