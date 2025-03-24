@@ -1,0 +1,114 @@
+SIMULATION DETAILS:
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 1
+STAGE1:
+Fetch: PC fetched as 0 and updated to 4 , Instruction Fetched: 0xa00e13
+STAGE2:
+Decode: Instruction decoded as: type- I opcode- 13
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= a
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 2
+STAGE1:
+Fetch: PC fetched as 4 and updated to 8 , Instruction Fetched: 0xa00293
+STAGE2:
+Decode: Instruction decoded as: type- I opcode- 13
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= a
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 3
+STAGE1:
+Fetch: PC fetched as 8 and updated to c , Instruction Fetched: 0x10000eb7
+STAGE2:
+Decode: Instruction decoded as: type- U opcode- 37
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 10000000
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 4
+STAGE1:
+Fetch: PC fetched as c and updated to 10 , Instruction Fetched: 0x100e8e93
+STAGE2:
+Decode: Instruction decoded as: type- I opcode- 13
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 10000100
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 5
+STAGE1:
+Fetch: PC fetched as 10 and updated to 14 , Instruction Fetched: 0x3c05063
+STAGE2:
+Decode: Instruction decoded as: type- SB opcode- 63
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 0
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 6
+STAGE1:
+Fetch: PC fetched as 14 and updated to 18 , Instruction Fetched: 0xe1263
+STAGE2:
+Decode: Instruction decoded as: type- SB opcode- 63
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 0
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 7
+STAGE1:
+Fetch: PC fetched as 18 and updated to 1c , Instruction Fetched: 0xfffe0e13
+STAGE2:
+Decode: Instruction decoded as: type- I opcode- 13
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 9
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 8
+STAGE1:
+Fetch: PC fetched as 1c and updated to 20 , Instruction Fetched: 0xe0663
+STAGE2:
+Decode: Instruction decoded as: type- SB opcode- 63
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 0
+STAGE4:
+Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= 0
+STAGE5:
+Register Writeback: Required data written to Register File
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CYCLE: 9
+STAGE1:
+Fetch: PC fetched as 28 and updated to 2c , Instruction Fetched: 0x5ea023
+STAGE2:
+Decode: Instruction decoded as: type- S opcode- 23
+STAGE3:
+Execute: The output of ALU is stored in temporary Register Rz= 10000100
+STAGE4:
