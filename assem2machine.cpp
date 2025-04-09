@@ -10,6 +10,7 @@ ll sizeIset,size;
 int binary[32];
 ll pccount = 0;
 string line, opcodes, func3s, func7s, rds, rs1s, rs2s, immediates, instype;
+int label_count_yet = 0;
 
 typedef struct 
 {
@@ -445,6 +446,11 @@ void TextSegment() {
 	int start = 0;
 	while(getline(myFile,line))
 	{
+        // Trim start
+        line.erase(line.begin(), find_if(line.begin(), line.end(), [](unsigned char ch) { return !isspace(ch); }));
+        // Trim end
+        line.erase(find_if(line.rbegin(), line.rend(), [](unsigned char ch) { return !isspace(ch); }).base(), line.end());
+        
 		if(line==".data")
 			flag = 1;
 		if(line==".text")
@@ -455,8 +461,9 @@ void TextSegment() {
 		if(flag!=1)
 			code.push_back(line);
 	}
-    cout<<"hello";
-    cout<<code.size()<<endl;
+    code.erase(remove(code.begin(), code.end(), ""), code.end()); //Remove empty lines from code
+    //cout<<code[2];
+    cout<<"Number of code lines including labels: "<<code.size()<<endl;
 
     myFile.close(); 
 }
@@ -477,12 +484,15 @@ void ExtractLabels() {
             instruction += line[end];
             end++;
         }
-
+       
         if (end < line.size() && line[end] == ':') {  //If label, then push into vector and extract following instruction name
             lab temp;
             temp.s = instruction;
             temp.index = count + 1;
             Label.push_back(temp);
+            
+            //cout<<"LABEL: "<<temp.s<<endl;
+            //cout<<"INDEX: "<<temp.index<<endl;
 
             end++; // Move past the ':'
             while (end < line.size() && isspace(line[end])) { //skip spaces
@@ -493,6 +503,7 @@ void ExtractLabels() {
                 instruction += line[end];
                 end++;
             }
+            //cout<<"label size: "<<temp.index<<endl;
         }
 
         //Doing this to keep the instruction count for label index (checking if instruction names are valid)
@@ -516,6 +527,7 @@ void ExtractLabels() {
                     break;
                 }
             }
+            //cout<<count<<" "<<instruction<<endl;
             if (foundDataLabel) continue;
         }
 
@@ -525,6 +537,7 @@ void ExtractLabels() {
             if (instruction == formatInstruction) {
                 count++;
                 instructionFound = true;
+                //cout<<count<<" "<<instruction<<endl;
                 break;
             }
         }
@@ -575,6 +588,7 @@ void WriteToFile() {
 int LabelOffset(const string &label, int ind) {
     for (const auto &lbl : Label) {  // Iterate through all labels
         if (label == lbl.s) {  // Match label name
+            //cout<<"label index: "<<lbl.index<<endl;
             return (lbl.index - ind) * 2;  // Calculate and return offset (branch offsets are specified in terms of 2-byte halfwords)
         }
     }
@@ -792,13 +806,14 @@ void SB_Type(int index, int ManualIndex) {
     // Parse label
     i = line.find_first_not_of(" ,", i); //returns index of  first character that is NOT a space (' ') or a comma (',')
     while (i < line.size() && line[i] != ' ' && line[i] != '#') label += line[i++];
-    imme = LabelOffset(label, index);
+    imme = LabelOffset(label, index-label_count_yet);
     if (imme < 0) {
         isNegative = true;
         imme = InvertDecimal(-imme, 12);
     }
 
     vector<int> binconv;
+    imme = imme*2;
     //convert label imm to binary
     if(isNegative)
         binconv = decimalToBinary(imme, 12);
@@ -904,14 +919,17 @@ void UJ_Type(int index, int ManualIndex) {
 
     // Parse label
     while (i < line.size() && line[i] != ' ' && line[i] != '#') label += line[i++];
-    imme = LabelOffset(label, index);
-    if (imme < 0) imme = InvertDecimal(imme, 20);
-
+    //cout<<"label:"<<label<<endl;
+    //cout<<"index of current line:"<<index-label_count_yet<<endl;
+    imme = LabelOffset(label, index-label_count_yet);
+    imme = imme*2;
+    //cout<<"imme:"<<imme<<endl;
     if (imme < 0) {
         isNegative = true;
         imme = InvertDecimal(-imme, 20);
     }
-   
+    
+    //cout<<"imme:"<<imme<<endl;
     vector<int> binconv;
     //convert label imm to binary
     if(isNegative)
@@ -984,12 +1002,24 @@ void Extract_type() {
         while (j < code[i].size() && code[i][j] != ' ') {
             ins += code[i][j++];
         }
-
-        // Handle label case (ending with ':')
+        //cout<<"...................."<<ins<<endl;
+        // Handle label case (ending with ':') when label and ins on same line
         if (!ins.empty() && ins.back() == ':' && code[i].size() > ins.size()) {
             ins.clear();
+            //cout<<"...................."<<endl;
+            label_count_yet++;
+            cout<<"label_count_yet: "<<label_count_yet<<endl;
             while (j < code[i].size() && code[i][j] == ' ') j++; // Skip spaces
             while (j < code[i].size() && code[i][j] != ' ') ins += code[i][j++];
+        }
+
+        // Handle label case (ending with ':') when label and ins on different lines
+        if (!ins.empty() && ins.back() == ':') {
+            //cout<<"...................."<<ins<<endl;
+            ins.clear();
+            label_count_yet++;
+            //cout<<"label_count_yet: "<<label_count_yet<<endl;
+            continue;
         }
 
         // Match the instruction with known formats
@@ -1056,7 +1086,53 @@ void printDataMemory2(){
 
 }
 
+//Function to remove comments
+void remove_comments(){
+    string inputFile = "input.asm";
+    ifstream in(inputFile);
+
+    if (!in.is_open()) {
+        cout << "Error opening input file." << endl;
+        }
+
+    vector<string> cleanedLines;
+    string line;
+
+    while (getline(in, line)) {
+        size_t commentPos = line.find('#');
+        if (commentPos != string::npos) {
+            line = line.substr(0, commentPos); // Remove comment
+        }
+
+        // Trim trailing whitespace
+        line.erase(line.find_last_not_of(" \t\r\n") + 1);
+
+        if (!line.empty()) {
+            cleanedLines.push_back(line);
+        }
+    }
+
+    in.close();
+
+    // Overwrite original file
+    ofstream out(inputFile);
+    if (!out.is_open()) {
+        cout << "Error opening file for writing." << endl;
+    }
+
+    for (const auto& cleaned : cleanedLines) {
+        out << cleaned << '\n';
+    }
+
+    out.close();
+    cout << "Comments removed and file overwritten: " << inputFile << endl;
+
+}
+
 int main(){
+
+    //Call this fumction to remove comments
+    //remove_comments();
 
     for(int i=0;i<4000;i++)   //Initialize Data memory
 		datamemory[i] = "00";
