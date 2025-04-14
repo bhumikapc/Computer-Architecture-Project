@@ -799,7 +799,7 @@ void run_RISCVsim(const string& filename)
         execute();
         outFile<<"Execute: The output of ALU is stored in temporary Register Rz= "<<rz<<endl;
         outFile<<"STAGE4:"<<endl;
-        cout<<"PC"<<PC<<endl;
+        //cout<<"PC"<<PC<<endl;
         mem();
         outFile<<"Memory Access: Memory Access performed if required and for Load instruction value is stored in Ry (default=0)= "<<ry<<endl;
         outFile<<"STAGE5:"<<endl;
@@ -919,7 +919,18 @@ int main(int argc, char** argv)
     // Load the program memory
     load_program_memory(prog_mc_file);
     
+    // If the program is bubblesort.mc, preset specific memory locations
+    if (prog_mc_file == "bubbleSort.mc") 
+    {
+        write_word(MEM, 0x10000000 - 0x10000000, 0x00000005);  // MEM[0x00]
+        write_word(MEM, 0x10000004 - 0x10000000, 0x00000007);  // MEM[0x04]
+        write_word(MEM, 0x10000008 - 0x10000000, 0x00000004);  // MEM[0x08]
+        write_word(MEM, 0x1000000C - 0x10000000, 0x00000001);  // MEM[0x0C]
+        write_word(MEM, 0x10000010 - 0x10000000, 0x00000003);  // MEM[0x10]
+        write_word(MEM, 0x10000014 - 0x10000000, 0x00000005);  // MEM[0x14]
+    }
 
+    //cout<<"hello"<<endl;
     // Run the simulator
     run_RISCVsim("simulation_results.txt");
     print_inst_memory("instruction_memory.txt");
